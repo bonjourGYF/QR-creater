@@ -1,4 +1,4 @@
-const assert = require("node:assert/strict");
+﻿const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
@@ -40,12 +40,15 @@ test("index.html includes required visible fields and privacy hint", () => {
   assert.match(html, /512/);
 });
 
-test("README documents local testing and GitHub Pages deployment", () => {
+test("README documents user-facing usage only", () => {
   assert.ok(fs.existsSync(readmePath), "README.md should exist");
   const readme = read(readmePath);
 
-  assert.match(readme, /GitHub Pages/);
-  assert.match(readme, /本地/);
-  assert.match(readme, /部署/);
+  assert.match(readme, /在线使用/);
   assert.match(readme, /生成二维码/);
+  assert.match(readme, /下载和打印/);
+  assert.match(readme, /联系卡片功能/);
+  assert.match(readme, /注意事项/);
+  assert.match(readme, /https:\/\/bonjourgyf\.github\.io\/QR-creater\//);
+  assert.doesNotMatch(readme, /本地测试|GitHub Pages 部署|node --test|python -m http\.server|Deploy from a branch/);
 });
